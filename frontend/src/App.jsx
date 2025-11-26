@@ -2,6 +2,7 @@ import React from 'react';
 import { SignedIn, SignedOut,SignOutButton, SignInButton,useUser,UserButton } from '@clerk/clerk-react';
 import { Navigate, Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage";
+import DashBoardPage from "./pages/DashBoardPage";
 import ProblemsPage from "./pages/ProblemsPage";
 import { Toaster } from 'react-hot-toast';
 function App() {
@@ -15,7 +16,7 @@ function App() {
     <>
         <Routes>
           <Route path="/" element={!isSignedIn ? <HomePage /> : <Navigate to={"/dashboard"} />} />
-          <Route path="/dashboard" element={isSignedIn ? <DashboardPage /> : <Navigate to={"/"} />} />
+          <Route path="/dashboard" element={isSignedIn ? <DashBoardPage /> : <Navigate to={"/"} />} />
 
           <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
         </Routes>
