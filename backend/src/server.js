@@ -9,11 +9,13 @@ import { clerkMiddleware } from "@clerk/express";
 import { protectRoute } from "./middlewares/protectRoute.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import sessionRoutes from "./routes/sessionRoutes.js";
+import job from "./lib/cron.js";
 const app =express();
 
 
 const __dirname = path.resolve();
 // middleware
+if (process.env.NODE_ENV === "production") job.start();
 app.use(express.json());
 // credentials:true meaning?? => server allows a browser to include cookies on request
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
@@ -27,9 +29,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/session", sessionRoutes);
 
 const port = ENV.PORT || 3000;
-app.get("/",(req,res)=>{
-    res.send("Hello World");
-})
+
 
 app.get("/video-calls", protectRoute, (req, res) => {
     console.log(req.user._id);
