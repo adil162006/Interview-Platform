@@ -26,7 +26,7 @@ app.use(clerkMiddleware()); // this adds auth field to req object : req.auth()
 
 app.use("/api/inngest", serve({ client: inngest, functions }));
 app.use("/api/chat", chatRoutes);
-app.use("/api/session", sessionRoutes);
+app.use("/api/sessions", sessionRoutes);
 
 const port = ENV.PORT || 3000;
 

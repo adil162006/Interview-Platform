@@ -27,7 +27,7 @@ export async function createSession(req,res){
         // chat messaging
         const channel= chatClient.channel("messaging",callId,{
             name:`${problem} Session`,
-            created_by: clerkId,
+            created_by: {id:clerkId},
             members:[clerkId]
         })
         await channel.create();
@@ -36,16 +36,13 @@ export async function createSession(req,res){
         console.log("Error in createSession controller:", error.message);
     res.status(500).json({ message: "Internal Server Error" });
     }
-
-
-
-
 }
 
 export async function getActiveSessions(_,res){
     try {
       const sessions =   await Session.find({status:"active"})
       .populate("host","name profileImage email clerkId")
+      .populate("participant", "name profileImage email clerkId")
       .sort({ createdAt: -1 })
       .limit(20);
 
